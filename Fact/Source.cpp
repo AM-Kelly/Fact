@@ -1,37 +1,54 @@
 // C++ program to compute factorial of big numbers
 #include<iostream>
 #include<conio.h>
-#include<vector>
+//#include<vector>
 using namespace std;
 
 // Maximum number of digits in output
-#define MAX 500
+#define MAX 99999
+
 
 class recFact
 {
 public:
-	void recFactDriver(int);
+	void recFactDriverBatch(int);
+	void recFactDriverSingle(int);
 
 private:
 	void recFactCalc(int);
-	int recFactMult(int, vector<int> res, int);
+	int recFactMult(int, int res[], int);
 };
-
-void recFact::recFactDriver(int n)
+void recFact::recFactDriverSingle(int i)
 {
-	recFactCalc(n);
+	int cFact;
+	cout << "The factorial of " << i << " is: \n";
+	recFactCalc(i);
+	cout << "\n";
+
+}
+void recFact::recFactDriverBatch(int i)
+{
+	int n = 1;
+	while (n <= i)
+	{
+		cout << "The factorial of " << n << " is: \n";
+		recFactCalc(n);
+		cout << n << "\n";
+		n++;
+	}
+	
 }
 
 void recFact::recFactCalc(int n)
 {
 	// This function finds factorial of large numbers
 	// and prints them
-	vector<int> res;
+	int res[MAX];
 
 	// Initialize result
 	//res.at(0) = 1;
-	res.push_back(1);
-	//res[0] = 1;
+	//res.push_back(1);
+	res[0] = 1;
 	//int res_size = sizeof(n);
 	int res_size = 1; // size of n
 
@@ -40,22 +57,22 @@ void recFact::recFactCalc(int n)
 		res_size = recFactMult(x, res, res_size);
 	
 
-	cout << "Factorial of given number is \n";
+	//cout << "Factorial of given number is \n";
 	for (int i = res_size - 1; i >= 0; i--)
-		cout << res.at(i);
+		cout << res[i];
 }
-int recFact::recFactMult(int x, vector<int> res, int res_size)
+int recFact::recFactMult(int x, int res[], int res_size)
 {
 	int carry = 0;  // Initialize carry
 
 					// One by one multiply n with individual digits of res[]
 	for (int i = 0; i<res_size; i++)
 	{
-		int prod = res.at(i) * x + carry;
+		int prod = res[i] * x + carry;
 		
 
 		// Store last digit of 'prod' in res[]  
-		res.at(i) = prod % 10;
+		res[i] = prod % 10;
 
 		// Put rest in carry
 		carry = prod / 10;
@@ -64,8 +81,8 @@ int recFact::recFactMult(int x, vector<int> res, int res_size)
 	// Put carry in res and increase result size
 	while (carry)
 	{
-		//res.at(res_size) = carry % 10;
-		res.push_back(carry % 10);
+		res[res_size] = carry % 10;
+		//res.push_back(carry % 10);
 		carry = carry / 10;
 		res_size++;
 	}
@@ -86,28 +103,68 @@ int recFact::recFactMult(int x, vector<int> res, int res_size)
 // Driver program
 void main()
 {
+	int biChoice;
 	int choice;
 	int num;
-	cout << "Enter a number you would like to calculate the factorial of.\n";
-	cin >> num;
-	cout << "\nWould you like to calculate this: \n1. Iterativley\nOR\n2.Recursivley\n";
-	cin >> choice;
-	switch (choice)
+	cout << "Would like to calculate a batch of factorials or an individual factorial?\n";
+	cout << "1. Batch	2. Indivdual\n";
+	cin >> biChoice;
+	if (biChoice == 1)
 	{
-	case 1: 
-		//Do stuff iteratively
-		_getch();
-		cout << "\n";
+		cout << "Please enter the maximum number you would like to calculate up to\n";
+		cin >> num;
+	}else if (biChoice == 2)
+	{
+		cout << "Please enter the number you would like to calculate the factorial of\n";
+		cin >> num;
+	}
+	else
+	{
+		cout << "Please choose again...\n";
 		main();
-	case 2:
-		//Recursive
-		recFact recFactStart;
-		recFactStart.recFactDriver(num);
-		_getch();
-		cout << "\n";
-		main();
-	default:
-		main();
-		break;
+	}
+	cout << "How would you like to calculate this: \n1. Iterativley\nOR\n2.Recursivley\n";
+	cin >> choice;
+	if (biChoice == 1)//Batch
+	{
+		switch (choice)
+		{
+		case 1:
+			//Do stuff iteratively
+			_getch();
+			cout << "\n";
+			main();
+		case 2:
+			//Recursive
+			recFact recFactStart;
+			recFactStart.recFactDriverBatch(num);
+			_getch();
+			cout << "\n";
+			main();
+		default:
+			main();
+			break;
+		}
+	}
+	else if (biChoice == 2)//Single
+	{
+		switch (choice)
+		{
+		case 1:
+			//Do stuff iteratively
+			_getch();
+			cout << "\n";
+			main();
+		case 2:
+			//Recursive
+			recFact recFactStart;
+			recFactStart.recFactDriverSingle(num);
+			_getch();
+			cout << "\n";
+			main();
+		default:
+			main();
+			break;
+		}
 	}
 }
