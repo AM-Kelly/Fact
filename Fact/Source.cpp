@@ -1,6 +1,8 @@
 // C++ program to compute factorial of big numbers
 #include<iostream>
 #include<conio.h>
+#include <ctime>
+clock_t clockStart;
 //#include<vector>
 using namespace std;
 
@@ -59,7 +61,7 @@ void recFact::recFactCalc(long long n)
 	int res_size = 1; // size of n
 
 					  // Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
-	//for (int x = 2; x <= n; x++)
+	//for (int x = 2; x <= n; x++) THIS WAS AN ERROR - TALK ABOUT IT
 	res_size = recFactMult(1, res, res_size, n);
 
 
@@ -196,7 +198,7 @@ void main()
 	int choice;
 	int num;
 	cout << "Would like to calculate a batch of factorials or an individual factorial?\n";
-	cout << "1. Batch	2. Indivdual\n";
+	cout << "1. Batch	2. Individual\n";
 	cin >> biChoice;
 	if (biChoice == 1)
 	{
@@ -221,14 +223,18 @@ void main()
 		case 1:
 			//Recursive
 			recFact recFactStart;
+			clockStart = clock();
 			recFactStart.recFactDriverBatch(num);
+			cout << "\nThis calculation took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";
 			_getch();
 			cout << "\n";
 			main();
 		case 2:
 			//Iterative
 			iterFact iterFactStart;
+			clockStart = clock();
 			iterFactStart.iterFactDriverBatch(num);
+			cout << "\nThis calculation took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";
 			_getch();
 			cout << "\n";
 			main();
@@ -244,14 +250,18 @@ void main()
 		case 1:
 			//Recursive
 			recFact recFactStart;
+			clockStart = clock();
 			recFactStart.recFactDriverSingle(num);
+			cout << "\nThis calculation took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";
 			_getch();
 			cout << "\n";
 			main();
 		case 2:
 			//Iterative
 			iterFact iterFactStart;
+			clockStart = clock();
 			iterFactStart.iterFactDriverSingle(num);
+			cout << "\nThis calculation took " << ((clock() - clockStart) / (double)CLOCKS_PER_SEC) << " seconds\n";
 			_getch();
 			cout << "\n";
 			main();
