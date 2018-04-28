@@ -11,24 +11,24 @@ using namespace std;
 class recFact
 {
 public:
-	void recFactDriverBatch(int);
-	void recFactDriverSingle(int);
+	void recFactDriverBatch(long long);
+	void recFactDriverSingle(long long);
 
 private:
-	void recFactCalc(int);
-	long long recFactMult(long long, long long res[], long long);
+	void recFactCalc(long long);
+	long long recFactMult(long long, long long res[], long long, long long);
 };
-void recFact::recFactDriverSingle(int i)
+void recFact::recFactDriverSingle(long long i)
 {
-	int cFact;
+	long long cFact;
 	cout << "The factorial of " << i << " is: \n";
 	recFactCalc(i);
 	cout << "\n";
 
 }
-void recFact::recFactDriverBatch(int i)
+void recFact::recFactDriverBatch(long long i)
 {
-	int n = 1;
+	long long n = 1;
 	while (n <= i)
 	{
 		cout << "The factorial of " << n << " is: \n";
@@ -38,12 +38,19 @@ void recFact::recFactDriverBatch(int i)
 	}
 
 }
-void recFact::recFactCalc(int n)
+void recFact::recFactCalc(long long n)
 {
 	// This function finds factorial of large numbers
 	// and prints them
 	long long res[MAX];
-
+	/*
+	if (n == 1)
+		return 1;
+	else
+	{
+		return n * recFactCalc(n - 1);
+	}
+	*/
 	// Initialize result
 	//res.at(0) = 1;
 	//res.push_back(1);
@@ -52,15 +59,16 @@ void recFact::recFactCalc(int n)
 	int res_size = 1; // size of n
 
 					  // Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
-	for (int x = 2; x <= n; x++)
-		res_size = recFactMult(x, res, res_size);
+	//for (int x = 2; x <= n; x++)
+	res_size = recFactMult(1, res, res_size, n);
 
 
 	//cout << "Factorial of given number is \n";
 	for (long long i = res_size - 1; i >= 0; i--)
 		cout << res[i];
+
 }
-long long recFact::recFactMult(long long  x, long long res[], long long res_size)
+long long recFact::recFactMult(long long  x, long long res[], long long res_size, long long n)
 {
 	long long carry = 0;  // Initialize carry
 
@@ -85,7 +93,7 @@ long long recFact::recFactMult(long long  x, long long res[], long long res_size
 		carry = carry / 10;
 		res_size++;
 	}
-	return res_size;
+	return (x == n) ? res_size : recFactMult((x+1), res, res_size, n);
 }
 //End of recursive
 
@@ -204,21 +212,23 @@ void main()
 		cout << "Please choose again...\n";
 		main();
 	}
-	cout << "How would you like to calculate this: \n1. Iterativley\nOR\n2.Recursivley\n";
+	cout << "How would you like to calculate this: \n1. Recursivley\nOR\n2.Iteratively\n";
 	cin >> choice;
 	if (biChoice == 1)//Batch
 	{
 		switch (choice)
 		{
 		case 1:
-			//Do stuff iteratively
+			//Recursive
+			recFact recFactStart;
+			recFactStart.recFactDriverBatch(num);
 			_getch();
 			cout << "\n";
 			main();
 		case 2:
-			//Recursive
-			iterFact recFactStart;
-			recFactStart.iterFactDriverBatch(num);
+			//Iterative
+			iterFact iterFactStart;
+			iterFactStart.iterFactDriverBatch(num);
 			_getch();
 			cout << "\n";
 			main();
@@ -232,14 +242,16 @@ void main()
 		switch (choice)
 		{
 		case 1:
-			//Do stuff iteratively
+			//Recursive
+			recFact recFactStart;
+			recFactStart.recFactDriverSingle(num);
 			_getch();
 			cout << "\n";
 			main();
 		case 2:
-			//Recursive
-			iterFact recFactStart;
-			recFactStart.iterFactDriverSingle(num);
+			//Iterative
+			iterFact iterFactStart;
+			iterFactStart.iterFactDriverSingle(num);
 			_getch();
 			cout << "\n";
 			main();
