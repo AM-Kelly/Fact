@@ -38,7 +38,6 @@ void recFact::recFactDriverBatch(int i)
 	}
 	
 }
-
 void recFact::recFactCalc(int n)
 {
 	// This function finds factorial of large numbers
