@@ -77,6 +77,18 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <Link>
+      <StackReserveSize>1000000000</StackReserveSize>
+    </Link>
+    <Link>
+      <StackCommitSize>1000000000</StackCommitSize>
+    </Link>
+    <Link>
+      <LargeAddressAware>true</LargeAddressAware>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
