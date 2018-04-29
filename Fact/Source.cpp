@@ -75,7 +75,7 @@ long long recFact::recFactMult(long long  x, long long res[], long long res_size
 	long long carry = 0;  // Initialize carry
 
 						  // One by one multiply n with individual digits of res[]
-	for (int i = 0; i<res_size; i++)
+	for (int i = 0; i < res_size; i++)
 	{
 		long long prod = res[i] * x + carry;
 
@@ -95,7 +95,7 @@ long long recFact::recFactMult(long long  x, long long res[], long long res_size
 		carry = carry / 10;
 		res_size++;
 	}
-	return (x == n) ? res_size : recFactMult((x+1), res, res_size, n);
+	return (x == n) ? res_size : recFactMult((x + 1), res, res_size, n);
 }
 //End of recursive
 
@@ -128,7 +128,7 @@ void iterFact::iterFactDriverBatch(int i)
 		cout << n << "\n";
 		n++;
 	}
-	
+
 }
 void iterFact::iterFactCalc(int n)
 {
@@ -146,7 +146,7 @@ void iterFact::iterFactCalc(int n)
 	// Apply simple factorial formula n! = 1 * 2 * 3 * 4...*n
 	for (int x = 2; x <= n; x++)
 		res_size = iterFactMult(x, res, res_size);
-	
+
 
 	//cout << "Factorial of given number is \n";
 	for (long long i = res_size - 1; i >= 0; i--)
@@ -157,10 +157,10 @@ long long iterFact::iterFactMult(long long  x, long long res[], long long res_si
 	long long carry = 0;  // Initialize carry
 
 					// One by one multiply n with individual digits of res[]
-	for (int i = 0; i<res_size; i++)
+	for (int i = 0; i < res_size; i++)
 	{
 		long long prod = res[i] * x + carry;
-		
+
 
 		// Store last digit of 'prod' in res[]  
 		res[i] = prod % 10;
@@ -199,23 +199,39 @@ void main()
 	int num;
 	cout << "Would like to calculate a batch of factorials or an individual factorial?\n";
 	cout << "1. Batch	2. Individual\n";
-	cin >> biChoice;
+	while (!(cin >> biChoice) || biChoice < 1 || biChoice > 2)
+	{
+		cout << "Please make a listed choice...";
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	}
 	if (biChoice == 1)
 	{
 		cout << "Please enter the maximum number you would like to calculate up to\n";
-		cin >> num;
-	}else if (biChoice == 2)
+		while (!(cin >> num) || num < 1)
+		{
+			cout << "Please enter a valid number (Not Zero (0) or Negative...";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
+	else if (biChoice == 2)
 	{
 		cout << "Please enter the number you would like to calculate the factorial of\n";
-		cin >> num;
+		while (!(cin >> num) || num < 1)
+		{
+			cout << "Please enter a valid number (Not Zero (0) or Negative...";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 	}
-	else
+	cout << "How would you like to calculate this: \n1. Recursivley (S)\n\nor\n\n2.Iteratively (F)\n";
+	while (!(cin >> choice) || choice < 1 || choice > 2)
 	{
-		cout << "Please choose again...\n";
-		main();
+		cout << "Please make a valid choice...";
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
-	cout << "How would you like to calculate this: \n1. Recursivley\nOR\n2.Iteratively\n";
-	cin >> choice;
 	if (biChoice == 1)//Batch
 	{
 		switch (choice)
@@ -239,7 +255,6 @@ void main()
 			cout << "\n";
 			main();
 		default:
-			main();
 			break;
 		}
 	}
@@ -266,7 +281,6 @@ void main()
 			cout << "\n";
 			main();
 		default:
-			main();
 			break;
 		}
 	}
